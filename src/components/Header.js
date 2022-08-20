@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import Cards from './Cards';
+import { LoginContext } from '../context/LoginContext';
 
-function Header({ title }) {
+function Header({ title, history }) {
+  const { strSearch, setStrSearch } = useContext(LoginContext);
   const [search, setSearch] = useState(false);
-  const [strSearch, setStrSearch] = useState('');
 
   return (
     <section>
@@ -41,7 +43,8 @@ function Header({ title }) {
           />
         </label>
       )}
-      <SearchBar />
+      <SearchBar history={ history } title={ title } />
+      <Cards title={ title } />
 
     </section>
   );
@@ -49,6 +52,9 @@ function Header({ title }) {
 
 Header.propTypes = {
   title: PropTypes.string,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 }.isRequired;
 
 export default Header;

@@ -28,11 +28,14 @@ function App() {
           path="/foods/:id/in-progress"
           render={ (props) => <FoodsProgress { ...props } /> }
         />
-        <Route path="/foods" component={ Foods } />
-        <Route path="/drinks" component={ Drinks } />
-        <Route path="/profile" component={ Profile } />
-        <Route path="/done-recipes" component={ DoneRecipes } />
-        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route path="/foods" component={ (props) => <Foods { ...props } /> } />
+        <Route path="/drinks" component={ (props) => <Drinks { ...props } /> } />
+        <Route path="/profile" component={ (props) => <Profile { ...props } /> } />
+        <Route path="/done-recipes" render={ (props) => <DoneRecipes { ...props } /> } />
+        <Route
+          path="/favorite-recipes"
+          component={ (props) => <FavoriteRecipes { ...props } /> }
+        />
       </Switch>
     </div>
   );

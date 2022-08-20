@@ -5,12 +5,15 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import LoginProvider from './context/LoginProvider';
+import FetchProvider from './context/fetchProvider';
 
 ReactDOM.render(
   <BrowserRouter>
-    <LoginProvider>
-      <App />
-    </LoginProvider>
+    <FetchProvider>
+      <LoginProvider>
+        <App />
+      </LoginProvider>
+    </FetchProvider>
   </BrowserRouter>,
   document.getElementById('root'),
 );

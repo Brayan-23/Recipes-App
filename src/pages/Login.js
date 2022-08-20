@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import LoginContext from '../context/LoginContext';
+import { LoginContext } from '../context/LoginContext';
 
 function Login({ history }) {
   const { userLogin, setUserLogin } = useContext(LoginContext);
