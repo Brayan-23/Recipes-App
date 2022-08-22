@@ -12,6 +12,7 @@ import FoodsId from './pages/FoodsId';
 import DrinksId from './pages/DrinksId';
 import DrinksProgress from './pages/DrinksProgress';
 import FoodsProgress from './pages/FoodsProgress';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           path="/favorite-recipes"
           component={ (props) => <FavoriteRecipes { ...props } /> }
         />
+        <Route path="/" component={ Footer } />
       </Switch>
     </div>
   );
