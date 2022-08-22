@@ -16,12 +16,26 @@ describe('Testes referentes ao Header', () => {
         userEvent.type(passwordInput, '1234567')
         userEvent.click(buttonInput)
         expect(screen.getByTestId('profile-top-btn')).toBeInTheDocument()
-        const buttonSearch = screen.getByRole('button')
+        const buttonSearch = screen.getByTestId('search-top-btn')
         userEvent.click(buttonSearch)
         expect(screen.getByTestId('search-input')).toBeVisible();
     })
-    it('Testa se aparece tudo corretmente', () => {
+    it('Testa funcionalidade do botão com a lupa', () => {
         renderWithRouter(<Drinks />)
+        expect(screen.getByTestId('profile-top-btn')).toBeInTheDocument()
+        const buttonSearch = screen.getByTestId('search-top-btn')
+        userEvent.click(buttonSearch)
+        const searchInput =  screen.getByTestId('search-input')
+        userEvent.type(searchInput, 'xablau')
+        expect(searchInput).toBeVisible();
+    })
+    it('Testa buscas', () => {
+       
+       
+       
+       
+        renderWithRouter(<Drinks />)
+
         expect(screen.getByTestId('profile-top-btn')).toBeInTheDocument()
         const buttonSearch = screen.getByRole('button')
         userEvent.click(buttonSearch)
