@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
-import Cards from './Cards';
+/* import Recipes from './Recipes'; */
 import { LoginContext } from '../context/LoginContext';
 
 function Header({ title, history }) {
@@ -44,7 +44,6 @@ function Header({ title, history }) {
         </label>
       )}
       <SearchBar history={ history } title={ title } />
-      <Cards title={ title } />
 
     </section>
   );
