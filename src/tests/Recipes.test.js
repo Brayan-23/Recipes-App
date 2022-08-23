@@ -1,5 +1,6 @@
 import renderWithRouter from '../helpers/renderWithRouter';
 import React from "react";
+import { fireEvent } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import Recipes from '../components/Recipes';
@@ -9,7 +10,7 @@ import drinksCategory from './mocks/drinks/drinksCategory';
 
 describe('Teste da página receitas.js', () => {
     it('botões de categoria estão sendo rederizados na tela foods',async () => {
-     
+
         jest.spyOn(global, "fetch").mockImplementation(() =>
         Promise.resolve({
           json: () => Promise.resolve(mealCategory)
@@ -47,4 +48,35 @@ describe('Teste da página receitas.js', () => {
       expect(screen.getByTestId('Other/Unknown-category-filter'))
       expect(screen.getByTestId('Cocoa-category-filter'))
     })
-})
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  })
