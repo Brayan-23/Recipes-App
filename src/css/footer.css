@@ -1,8 +1,8 @@
 footer {
   align-content: center;
   align-items: center;
-  bottom: 0;
   background-color: bisque;
+  bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-around;

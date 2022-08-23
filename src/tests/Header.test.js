@@ -28,19 +28,5 @@ describe('Testes referentes ao Header', () => {
         const searchInput =  screen.getByTestId('search-input')
         userEvent.type(searchInput, 'xablau')
         expect(searchInput).toBeVisible();
-    })
-    it('Testa buscas', () => {
-       
-       
-       
-       
-        renderWithRouter(<Drinks />)
-
-        expect(screen.getByTestId('profile-top-btn')).toBeInTheDocument()
-        const buttonSearch = screen.getByRole('button')
-        userEvent.click(buttonSearch)
-        const searchInput =  screen.getByTestId('search-input')
-        userEvent.type(searchInput, 'xablau')
-        expect(searchInput).toBeVisible();
-    })
-})
+    })})
+    

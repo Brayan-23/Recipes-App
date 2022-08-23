@@ -1,3 +1,13 @@
+export const fetchCocksAll = async () => {
+  const allCock = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=').then((response) => response.json());
+  return allCock;
+};
+
+export const fetchFoodsAll = async () => {
+  const allFoods = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=').then((response) => response.json());
+  return allFoods;
+};
+
 export const fetchIngredient = async (ingrediente) => {
   const ingredient = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingrediente}`).then((response) => response.json());
   return ingredient;
@@ -25,4 +35,24 @@ export const fetchLetterCock = async (letter) => {
 export const fetchNomeCock = async (nome) => {
   const nameCock = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nome}`).then((response) => response.json());
   return nameCock;
+};
+
+export const fetchCategoryFood = async () => {
+  const categoryFood = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list').then((response) => response.json());
+  return categoryFood;
+};
+
+export const fetchCategoryCock = async () => {
+  const categoryCock = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list').then((response) => response.json());
+  return categoryCock;
+};
+
+export const fetchFoodsCategory = async (categoryFood) => {
+  const categoryCock = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryFood}`).then((response) => response.json());
+  return categoryCock;
+};
+
+export const fetchCocksCategory = async (categoryCock) => {
+  const filterCategories = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryCock}`).then((response) => response.json());
+  return filterCategories;
 };
