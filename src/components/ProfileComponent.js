@@ -15,6 +15,11 @@ function ProfileComponent() {
     storageEmail();
   }, []);
 
+  const clickLogoutButton = () => {
+    localStorage.clear();
+    history.push('/');
+  };
+
   return (
     <div>
       <p data-testid="profile-email">{ email }</p>
@@ -35,7 +40,7 @@ function ProfileComponent() {
       <button
         type="button"
         data-testid="profile-logout-btn"
-        onClick={ () => history.push('/') }
+        onClick={ clickLogoutButton }
       >
         Logout
       </button>
