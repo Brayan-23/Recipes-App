@@ -308,6 +308,3 @@ it('testa busca ingrediente do drink', async () => {
     expect(await screen.findByText('A1'))
 
   })
-
-
-
