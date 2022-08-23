@@ -1,6 +1,5 @@
 import renderWithRouter from '../helpers/renderWithRouter';
 import React from "react";
-import { fireEvent } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import Recipes from '../components/Recipes';
@@ -9,10 +8,13 @@ import { act } from 'react-dom/test-utils';
 import drinksCategory from './mocks/drinks/drinksCategory';
 import mealCategoryBeef from './mocks/meal/mealCategoryBeef';
 import { fireEvent } from '@testing-library/react';
+import mockSearch from './mocks/meal/mockSearch';
+
+
 
 describe('Teste da página receitas.js', () => {
     it('botões de categoria estão sendo rederizados na tela foods',async () => {
-
+      
         jest.spyOn(global, "fetch").mockImplementation(() =>
         Promise.resolve({
           json: () => Promise.resolve(mealCategory)
@@ -50,77 +52,60 @@ describe('Teste da página receitas.js', () => {
       expect(screen.getByTestId('Other/Unknown-category-filter'))
       expect(screen.getByTestId('Cocoa-category-filter'))
     })
-<<<<<<< HEAD
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  })
-=======
-
-    it('botões de categoria estão sendo rederizados na tela foods',async () => {
+        it('botões de categoria estão sendo rederizados na tela foods',async () => {
 
       
      
-    //   jest.spyOn(global, "fetch").mockImplementation(() =>
-    //   Promise.resolve({
-    //     json: () => Promise.resolve(mealCategory)
-    //   })
-    // );
-
-      jest.spyOn(global, "fetch").mockImplementation((url,url2) =>{
-        url = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=beef';
-        url2 = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
-        if(url2){
-          return Promise.resolve({
-            json: () => Promise.resolve(mealCategory)
-          })
-        }
-        if(url){
-          return Promise.resolve({
-            json: () => Promise.resolve(mealCategoryBeef)
-          })
-        }
-        }
-      );
-     
-    await act(async () => {
-      renderWithRouter(<Recipes title='Foods'/>);
-
-    });
+      //   jest.spyOn(global, "fetch").mockImplementation(() =>
+      //   Promise.resolve({
+      //     json: () => Promise.resolve(mealCategory)
+      //   })
+      // );
+      
+        jest.spyOn(global, "fetch").mockImplementation( async (url) => {
+         console.log(url)
+          switch (url) {
+            case "https://www.themealdb.com/api/json/v1/1/search.php?s=": {
+              return {
+                json:() => Promise.resolve(mockSearch)
+          }}
+            case "https://www.themealdb.com/api/json/v1/1/list.php?c=list": {
+              return {
+                json: () => Promise.resolve(mealCategory)
+          }}
+            case "https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef": {
+                return {
+                  json:() => Promise.resolve(mealCategoryBeef)
+            }}
+            
+            default: {
+                throw new Error(`Unhandled request: ${url}`);
+            }
+        }}
+        );
+       
+      await act(async () => {
+        renderWithRouter(<Recipes title='Foods'/>);
   
-   const beef = await screen.findByTestId('Beef-category-filter');
-   fireEvent.click(beef);
+      });
+        
+     const beef = await screen.findByTestId('Beef-category-filter');
+     fireEvent.click(beef);
+          
 
-   expect(await screen.findByText('Beef and Mustard Pie'))
-    
+     expect(await screen.findByText('Beef'))
+      
+    })
   })
-})
->>>>>>> 068db4fc02c2e90675dd1e7e8b6895f1c5a8b0b6
+
+
+
+
+
+
+
+
+
+
+
+
