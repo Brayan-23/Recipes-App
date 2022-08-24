@@ -8,7 +8,7 @@ function ProfileComponent() {
 
   const storageEmail = () => {
     const getLocalEmail = JSON.parse(localStorage.getItem('user'));
-    setEmail(getLocalEmail.email);
+    setEmail(getLocalEmail?.email);
   };
 
   useEffect(() => {
