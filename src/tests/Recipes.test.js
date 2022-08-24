@@ -6,10 +6,15 @@ import Recipes from '../components/Recipes';
 import mealCategory from './mocks/meal/mealCategory';
 import { act } from 'react-dom/test-utils';
 import drinksCategory from './mocks/drinks/drinksCategory';
+import mealCategoryBeef from './mocks/meal/mealCategoryBeef';
+import { fireEvent } from '@testing-library/react';
+import mockSearch from './mocks/meal/mockSearch';
+
+
 
 describe('Teste da página receitas.js', () => {
     it('botões de categoria estão sendo rederizados na tela foods',async () => {
-     
+      
         jest.spyOn(global, "fetch").mockImplementation(() =>
         Promise.resolve({
           json: () => Promise.resolve(mealCategory)
@@ -47,4 +52,60 @@ describe('Teste da página receitas.js', () => {
       expect(screen.getByTestId('Other/Unknown-category-filter'))
       expect(screen.getByTestId('Cocoa-category-filter'))
     })
-})
+        it('botões de categoria estão sendo rederizados na tela foods',async () => {
+
+      
+     
+      //   jest.spyOn(global, "fetch").mockImplementation(() =>
+      //   Promise.resolve({
+      //     json: () => Promise.resolve(mealCategory)
+      //   })
+      // );
+      
+        jest.spyOn(global, "fetch").mockImplementation( async (url) => {
+         console.log(url)
+          switch (url) {
+            case "https://www.themealdb.com/api/json/v1/1/search.php?s=": {
+              return {
+                json:() => Promise.resolve(mockSearch)
+          }}
+            case "https://www.themealdb.com/api/json/v1/1/list.php?c=list": {
+              return {
+                json: () => Promise.resolve(mealCategory)
+          }}
+            case "https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef": {
+                return {
+                  json:() => Promise.resolve(mealCategoryBeef)
+            }}
+            
+            default: {
+                throw new Error(`Unhandled request: ${url}`);
+            }
+        }}
+        );
+       
+      await act(async () => {
+        renderWithRouter(<Recipes title='Foods'/>);
+  
+      });
+        
+     const beef = await screen.findByTestId('Beef-category-filter');
+     fireEvent.click(beef);
+          
+
+     expect(await screen.findByText('Beef'))
+      
+    })
+  })
+
+
+
+
+
+
+
+
+
+
+
+
