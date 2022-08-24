@@ -9,6 +9,8 @@ import drinksCategory from './mocks/drinks/drinksCategory';
 import mealCategoryBeef from './mocks/meal/mealCategoryBeef';
 import { fireEvent } from '@testing-library/react';
 import mockSearch from './mocks/meal/mockSearch';
+import drinksSearch from './mocks/drinks/drinksSearch';
+import drinksCategoryShake from './mocks/drinks/drinksCategoryShake';
 
 
 
@@ -53,14 +55,6 @@ describe('Teste da página receitas.js', () => {
       expect(screen.getByTestId('Cocoa-category-filter'))
     })
         it('botões de categoria estão sendo rederizados na tela foods',async () => {
-
-      
-     
-      //   jest.spyOn(global, "fetch").mockImplementation(() =>
-      //   Promise.resolve({
-      //     json: () => Promise.resolve(mealCategory)
-      //   })
-      // );
       
         jest.spyOn(global, "fetch").mockImplementation( async (url) => {
          console.log(url)
@@ -90,12 +84,59 @@ describe('Teste da página receitas.js', () => {
       });
         
      const beef = await screen.findByTestId('Beef-category-filter');
-     fireEvent.click(beef);
-          
+     fireEvent.click(beef);   
 
      expect(await screen.findByText('Beef'))
+
+     const all = await screen.findByTestId('All-category-filter');
+
+     fireEvent.click(all);
+
+     expect(await screen.findByText('Corba'));
       
     })
+
+    it('botões de categoria estão sendo rederizados na tela drinks',async () => {
+      
+      jest.spyOn(global, "fetch").mockImplementation( async (url) => {
+       console.log(url)
+        switch (url) {
+          case "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=": {
+            return {
+              json:() => Promise.resolve(drinksSearch)
+        }}
+          case "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list": {
+            return {
+              json: () => Promise.resolve(drinksCategory)
+        }}
+          case "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Shake": {
+              return {
+                json:() => Promise.resolve(drinksCategoryShake)
+          }}
+          
+          default: {
+              throw new Error(`Unhandled request: ${url}`);
+          }
+      }}
+      );
+     
+    await act(async () => {
+      renderWithRouter(<Recipes title='Drinks'/>);
+
+    });
+      
+   const Shake = await screen.findByTestId('Shake-category-filter');
+   fireEvent.click(Shake);   
+
+   expect(await screen.findByText('Avalanche'))
+
+   const all = await screen.findByTestId('All-category-filter');
+
+   fireEvent.click(all);
+
+   expect(await screen.findByText('GG'));
+    
+  })
   })
 
 
