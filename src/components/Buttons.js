@@ -1,12 +1,24 @@
-import React, { useContext, useState } from 'react';
+import React, { /*  useContext, */ useEffect, useState } from 'react';
 import copy from 'clipboard-copy';
 import PropTypes from 'prop-types';
+import { fetchItemFood, fetchItemCock } from '../helpers/FetchApi';
 import shareIcon from '../images/shareIcon.svg';
-import { fetchContext } from '../context/LoginContext';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+/* import { fetchContext } from '../context/LoginContext'; */
 
 function Buttons({ url, id, title }) {
-  const { originalCocks, originalFoods } = useContext(fetchContext);
+/*   const { originalCocks, originalFoods } = useContext(fetchContext); */
   const [copied, setCopied] = useState(true);
+  const [heart, setHeart] = useState(false);
+
+  useEffect(() => {
+    const getLocalFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (getLocalFavorite !== null) {
+      const response = getLocalFavorite.some((elem) => elem.id === id);
+      setHeart(response);
+    }
+  }, []);
 
   const objFoods = (find) => ({
     id: find.idMeal,
@@ -15,7 +27,7 @@ function Buttons({ url, id, title }) {
     category: find.strCategory,
     alcoholicOrNot: '',
     name: find.strMeal,
-    imagem: find.strMealThumb,
+    image: find.strMealThumb,
   });
 
   const objCoocks = (find) => ({
@@ -25,14 +37,14 @@ function Buttons({ url, id, title }) {
     category: find.strCategory,
     alcoholicOrNot: find.strAlcoholic,
     name: find.strDrink,
-    imagem: find.strDrinkThumb,
+    image: find.strDrinkThumb,
   });
 
-  const favoriteRecipes = () => {
+  const favoriteRecipes = async () => {
     const getLocalFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (title === 'Foods') {
-      const find = originalFoods.find((elem) => elem.idMeal === id);
-      const result = objFoods(find);
+      const { meals } = await fetchItemFood(id);
+      const result = objFoods(meals[0]);
       if (getLocalFavorite === null) {
         localStorage.setItem('favoriteRecipes',
           JSON.stringify([result]));
@@ -42,8 +54,8 @@ function Buttons({ url, id, title }) {
       }
     }
     if (title === 'Drinks') {
-      const find = originalCocks.find((elem) => elem.idDrink === id);
-      const result = objCoocks(find);
+      const { drinks } = await fetchItemCock(id);
+      const result = objCoocks(drinks[0]);
       if (getLocalFavorite === null) {
         localStorage.setItem('favoriteRecipes',
           JSON.stringify([result]));
@@ -66,14 +78,19 @@ function Buttons({ url, id, title }) {
       >
         <img src={ shareIcon } alt="Icone" />
       </button>
-      <button
-        type="button"
-        data-testid="favorite-btn"
-        onClick={ favoriteRecipes }
-      >
-        Favoritar
-
-      </button>
+      <label htmlFor="favorite">
+        <input
+          type="image"
+          id="favorite"
+          src={ heart ? blackHeartIcon : whiteHeartIcon }
+          alt="icone"
+          data-testid="favorite-btn"
+          onClick={ () => {
+            setHeart(!heart);
+            favoriteRecipes();
+          } }
+        />
+      </label>
       {!copied && <p>Link copied!</p> }
     </section>
   );

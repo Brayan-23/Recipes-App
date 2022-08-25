@@ -15,42 +15,31 @@ function RecipeDetails({ title, match: { params: { id } } }) {
   const history = useHistory();
   const [details, setDetails] = useState({});
   const [ingr, setIngr] = useState([]);
-  const [btn] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
   const [copyUrl, setCopyUrl] = useState('');
-
-  useEffect(() => {
-    const result = async () => {
-      if (title === 'Drinks') {
-        const { drinks } = await fetchItemCock(id);
-        const chaves = Object.entries(drinks[0]);
-        setCopyUrl(`http://localhost:3000/drinks/${id}`);
-        setIngr(chaves);
-        setDetails(drinks[0]);
-      }
-      if (title === 'Foods') {
-        const { meals } = await fetchItemFood(id);
-        const chaves = Object.entries(meals[0]);
-        setCopyUrl(`http://localhost:3000/foods/${id}`);
-        setIngr(chaves);
-        setDetails(meals[0]);
-      }
-    };
-    result();
-  }, []);
 
   useEffect(() => {
     const result = async () => {
       const number5 = 5;
       if (title === 'Drinks') {
         const { meals } = await fetchFoodsAll();
+        const { drinks } = await fetchItemCock(id);
+        const chaves = Object.entries(drinks[0]);
         const filter = meals.filter((elem, index) => index <= number5 && elem);
         setRecomendations(filter);
+        setCopyUrl(`http://localhost:3000/drinks/${id}`);
+        setIngr(chaves);
+        setDetails(drinks[0]);
       }
       if (title === 'Foods') {
         const { drinks } = await fetchCocksAll();
+        const { meals } = await fetchItemFood(id);
+        const chaves = Object.entries(meals[0]);
         const filter = drinks.filter((elem, index) => index <= number5 && elem);
         setRecomendations(filter);
+        setCopyUrl(`http://localhost:3000/foods/${id}`);
+        setIngr(chaves);
+        setDetails(meals[0]);
       }
     };
     result();
@@ -77,11 +66,25 @@ function RecipeDetails({ title, match: { params: { id } } }) {
     );
   };
 
+  const storageDone = () => {
+    const done = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (done !== null) {
+      const check = done.some((elem) => elem.id === id);
+      if (check) { return true; }
+      if (!check) { return false; }
+    }
+  };
+
   const startAndContinue = () => {
-    const progress = localStorage.getItem('inProgressRecipes');
+    const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (progress === null) { return START_RECICPE; }
-    if (progress[id] && title === 'Foods') {
-      return 'Continue Recipe';
+    if (title === 'Foods') {
+      const check = id in progress.meals;
+      return check ? 'Continue Recipe' : START_RECICPE;
+    }
+    if (title === 'Drinks') {
+      const check = id in progress.cocktails;
+      return check ? 'Continue Recipe' : START_RECICPE;
     }
   };
 
@@ -147,7 +150,7 @@ function RecipeDetails({ title, match: { params: { id } } }) {
           </div>
         ))}
       </div>
-      {btn && (
+      {!storageDone() && (
         <button
           type="button"
           className="start-continue"
