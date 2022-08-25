@@ -56,3 +56,13 @@ export const fetchCocksCategory = async (categoryCock) => {
   const filterCategories = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryCock}`).then((response) => response.json());
   return filterCategories;
 };
+
+export const fetchItemFood = async (id) => {
+  const fetchItems = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`).then((response) => response.json());
+  return fetchItems;
+};
+
+export const fetchItemCock = async (id) => {
+  const fetchItems = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`).then((response) => response.json());
+  return fetchItems;
+};

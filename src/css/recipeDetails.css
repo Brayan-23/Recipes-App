@@ -1,0 +1,23 @@
+.imgs {
+  height: 28vw;
+  margin-right: 10px;
+  width: 28vh;
+}
+
+.recipe-img {
+  height: 40vw;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  width: 40vh;
+}
+
+.start-continue {
+  bottom: 0;
+  position: fixed;
+}
+
+.carousel {
+  display: flex;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
