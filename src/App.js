@@ -8,10 +8,9 @@ import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-import DrinksProgress from './pages/DrinksProgress';
-import FoodsProgress from './pages/FoodsProgress';
 import Footer from './components/Footer';
 import RecipeDetails from './components/RecipeDetails';
+import RecipeInProgress from './components/RecipeInProgress';
 
 function App() {
   return (
@@ -19,20 +18,20 @@ function App() {
       <Switch>
         <Route exact path="/" render={ (props) => <Login { ...props } /> } />
         <Route
+          path="/drinks/:id/in-progress"
+          render={ (props) => <RecipeInProgress { ...props } title="Drinks" /> }
+        />
+        <Route
+          path="/foods/:id/in-progress"
+          render={ (props) => <RecipeInProgress { ...props } title="Foods" /> }
+        />
+        <Route
           path="/foods/:id"
           render={ (props) => <RecipeDetails { ...props } title="Foods" /> }
         />
         <Route
           path="/drinks/:id"
           render={ (props) => <RecipeDetails { ...props } title="Drinks" /> }
-        />
-        <Route
-          path="/drinks/:id/in-progress"
-          render={ (props) => <DrinksProgress { ...props } /> }
-        />
-        <Route
-          path="/foods/:id/in-progress"
-          render={ (props) => <FoodsProgress { ...props } /> }
         />
         <Route path="/foods" render={ (props) => <Foods { ...props } /> } />
         <Route path="/drinks" render={ (props) => <Drinks { ...props } /> } />
