@@ -1,29 +1,104 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { fetchItemCock, fetchItemFood } from '../helpers/FetchApi';
 import Buttons from './Buttons';
 
 function RecipeInProgress({ title, match: { params: { id } } }) {
+  const history = useHistory();
   const [details, setDetails] = useState([]);
   const [ingr, setIngr] = useState([]);
+  const [measure, setMeasure] = useState([]);
   const [copyUrl, setCopyUrl] = useState('');
-  /*     const [test, setTest] = useState({}); */
-  const [objChecks, setObjChecks] = useState([]);
+  const [ingredient, setIngredient] = useState('');
+  const [checkBox, setCheckBox] = useState({});
+  const [btnFinish, setBtnFinish] = useState(true);
+
+  const filterIngredientsAndMeasure = (chaves) => {
+    const filterIngredient = chaves
+      .filter((elem) => elem[0].includes('strIngredient')
+      && elem[1] !== '' && elem[1] !== null && elem[1] !== ' ');
+    const filterMeasure = chaves.filter((elem) => elem[0].includes('strMeasure')
+  && elem[1] !== ' ' && elem[1] !== null && elem[1] !== '');
+    return [filterIngredient, filterMeasure];
+  };
+
+  const reduceFunction = (nada) => nada.reduce((acc, curr, index) => {
+    if (index === 0) {
+      acc = { [curr]: true };
+    } else {
+      acc = { ...acc, [curr]: true };
+    }
+    return acc;
+  }, {});
+
+  const checkboxReturnLocal = () => {
+    const getLocalProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (getLocalProgress !== null) {
+      if (title === 'Foods' && getLocalProgress.meals[id]) {
+        const nada = getLocalProgress.meals[id];
+        setCheckBox(reduceFunction(nada));
+      }
+      if (title === 'Drinks' && getLocalProgress.cocktails[id]) {
+        const nada = getLocalProgress.cocktails[id];
+        setCheckBox(reduceFunction(nada));
+      }
+    }
+  };
+
+  useEffect(() => {
+    checkboxReturnLocal();
+    const result = async () => {
+      if (title === 'Drinks') {
+        const { drinks } = await fetchItemCock(id);
+        const chaves = Object.entries(drinks[0]);
+        console.log(chaves);
+        setIngr(filterIngredientsAndMeasure(chaves)[0]);
+        setMeasure(filterIngredientsAndMeasure(chaves)[1]);
+        setCopyUrl(`http://localhost:3000/drinks/${id}`);
+        setDetails(drinks[0]);
+      }
+      if (title === 'Foods') {
+        const { meals } = await fetchItemFood(id);
+        const chaves = Object.entries(meals[0]);
+        setIngr(filterIngredientsAndMeasure(chaves)[0]);
+        setMeasure(filterIngredientsAndMeasure(chaves)[1]);
+        console.log(filterIngredientsAndMeasure(chaves)[1]);
+        setCopyUrl(`http://localhost:3000/foods/${id}`);
+        setDetails(meals[0]);
+      }
+    };
+    result();
+  }, [id]);
 
   const ifLocal = () => {
     if (title === 'Foods') {
       const obj = {
         cocktails: {},
-        meals: { [id]: objChecks },
+        meals: { [id]: [] },
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
     }
     if (title === 'Drinks') {
       const obj = {
         meals: {},
-        cocktails: { [id]: objChecks },
+        cocktails: { [id]: [] },
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
+    }
+  };
+
+  const checkButtonFinish = () => {
+    const getLocalProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (getLocalProgress === null) { return true; }
+    if (getLocalProgress.meals[id] || getLocalProgress.cocktails[id]) {
+      const recipes = title === 'Foods'
+        ? getLocalProgress.meals[id]
+        : getLocalProgress.cocktails[id];
+      console.log('chamou');
+      if (recipes.length === ingr.length) {
+        setBtnFinish(false);
+      } else { setBtnFinish(true); }
     }
   };
 
@@ -33,87 +108,29 @@ function RecipeInProgress({ title, match: { params: { id } } }) {
       ifLocal();
     }
     if (getLocalProgress !== null) {
-      if (title === 'Foods') {
-        const nada = [...new Set(objChecks)];
+      if (title === 'Foods' && ingredient !== '') {
         const obj = {
           ...getLocalProgress,
-          meals: { ...getLocalProgress.meals, [id]: nada },
+          meals: { ...getLocalProgress.meals,
+            [id]: id in getLocalProgress.meals
+              ? [...getLocalProgress.meals[id], ingredient]
+              : [ingredient] },
         };
         localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
       }
-      if (title === 'Drinks') {
-        const nada = [...new Set(objChecks)];
+      if (title === 'Drinks' && ingredient !== '') {
         const obj = {
           ...getLocalProgress,
-          cocktails: { ...getLocalProgress.cocktails, [id]: nada },
+          cocktails: { ...getLocalProgress.cocktails,
+            [id]: id in getLocalProgress.cocktails
+              ? [...getLocalProgress.cocktails[id], ingredient]
+              : [ingredient] },
         };
         localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
       }
     }
-  }, [objChecks]);
-
-  useEffect(() => {
-    const result = async () => {
-      if (title === 'Drinks') {
-        const { drinks } = await fetchItemCock(id);
-        const chaves = Object.entries(drinks[0]);
-        console.log(drinks[0]);
-        setCopyUrl(`http://localhost:3000/drinks/${id}`);
-        setIngr(chaves);
-        setDetails(drinks[0]);
-      }
-      if (title === 'Foods') {
-        const { meals } = await fetchItemFood(id);
-        const chaves = Object.entries(meals[0]);
-        setCopyUrl(`http://localhost:3000/foods/${id}`);
-        setIngr(chaves);
-        setDetails(meals[0]);
-      }
-    };
-    result();
-  }, []);
-
-  const returnLocal = (elem) => {
-    const getLocalProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (getLocalProgress !== null) {
-      if (title === 'Foods') {
-        console.log(elem);
-        console.log(getLocalProgress.meals[id].includes(elem));
-      }
-      if (title === 'Drinks') {
-        return getLocalProgress.cocktails[id].includes(elem);
-      }
-    }
-  };
-
-  const ingredients = () => {
-    const filterIngredient = ingr
-      .filter((elem) => elem[0].includes('strIngredient'));
-    const filterMeasure = ingr.filter((elem) => elem[0].includes('strMeasure'));
-    return (
-      <section>
-        {filterIngredient.map((elem, index) => (
-          elem[1]
-          && (
-            <label
-              htmlFor={ `check ${index}` }
-              key={ `inputs ingredients check ${index}` }
-              data-testid={ `${index}-ingredient-step` }
-            >
-              <input
-                type="checkbox"
-                value={ returnLocal(elem[1]) }
-                id={ `check ${index}` }
-                onChange={ () => (
-                  setObjChecks([...objChecks, elem[1]])) }
-              />
-              {`${elem[1]} ${filterMeasure[index][1]}`}
-            </label>
-          )
-        ))}
-      </section>
-    );
-  };
+    checkButtonFinish();
+  }, [ingredient]);
 
   return (
     <div>
@@ -135,8 +152,32 @@ function RecipeInProgress({ title, match: { params: { id } } }) {
         className="recipe-img"
       />
       <p data-testid="instructions">{details.strInstructions}</p>
-      {ingredients()}
-      <button type="button" data-testid="finish-recipe-btn">Finish Recipe</button>
+      <section>
+        {ingr.map((elem, index) => (
+          <label
+            key={ `checkbox ${index}` }
+            data-testid={ `${index}-ingredient-step` }
+            htmlFor={ `check ${index}` }
+          >
+            <input
+              type="checkbox"
+              id={ `check ${index}` }
+              checked={ checkBox[elem[1]] }
+              onChange={ () => (
+                setIngredient(elem[1])) }
+            />
+            {`${elem[1]} ${measure[index] && measure[index][1]}`}
+          </label>
+        ))}
+      </section>
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ btnFinish }
+        onClick={ () => history.push('/done-recipes') }
+      >
+        Finish Recipe
+      </button>
     </div>
   );
 }
