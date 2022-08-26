@@ -15,7 +15,7 @@ import drinkLookUp from './mocks/drinks/drinkLookUp';
 
 
 describe('Teste da página detalhes das receitas.js', () => {
-    it('quando entramos na receita desejada é rederizado os elementos',async () => {
+    it('quando entramos na tela verifica se rederiza com base no local storage',async () => {
     
     const TEST_KEY = 'favoriteRecipes'
 
@@ -41,3 +41,63 @@ describe('Teste da página detalhes das receitas.js', () => {
         expect(screen.getByText('GG')).toBeInTheDocument()
       })
 })
+
+it('quando entramos na receita desejada é rederizado os elementos',async () => {
+    
+    const TEST_KEY = 'favoriteRecipes'
+
+    const TEST_VALUE = JSON.stringify([{
+        alcoholicOrNot: "Optional alcohol",
+        category: "Ordinary Drink",
+        id: "15997",
+        image: "https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg",
+        name: "GG",
+        nationality: "",
+        type: "drink", }]);
+     
+     
+
+      localStorage.setItem(TEST_KEY, TEST_VALUE);
+
+        const { history } = renderWithRouter(<App />);
+        await act(async () => {
+            history.push('/favorite-recipes');
+          });   
+
+
+        const favButton = screen.getByTestId('0-horizontal-favorite-btn')
+        userEvent.click(favButton)
+        expect(JSON.parse(localStorage.getItem(TEST_KEY))).toEqual([]);
+      })
+
+
+      it('quando entramos na receita desejada é rederizado os elementos',async () => {
+    
+        const TEST_KEY = 'favoriteRecipes'
+    
+        const TEST_VALUE = JSON.stringify([{
+            alcoholicOrNot: "Optional alcohol",
+            category: "Ordinary Drink",
+            id: "15997",
+            image: "https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg",
+            name: "GG",
+            nationality: "",
+            type: "drink", }]);
+         
+         
+    
+          localStorage.setItem(TEST_KEY, TEST_VALUE);
+    
+            const { history } = renderWithRouter(<App />);
+            await act(async () => {
+                history.push('/favorite-recipes');
+              });   
+    
+    
+            //   const buttonShare = screen.getByTestId('0-horizontal-share-btn')
+      
+            //   userEvent.click(buttonShare)
+        
+            //   expect(screen.getByText('Link copied!'))
+          })
+    
