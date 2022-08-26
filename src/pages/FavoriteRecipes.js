@@ -7,11 +7,21 @@ import shareIcon from '../images/shareIcon.svg';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const previousFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   useEffect(() => {
-    const previousFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (previousFavoriteRecipes) setFavoriteRecipes(previousFavoriteRecipes);
   }, []);
+
+  useEffect(() => {
+  }, [favoriteRecipes]);
+
+  const removeFavoriteHandle = (i) => {
+    previousFavoriteRecipes.splice(i, [1]);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(previousFavoriteRecipes));
+    setFavoriteRecipes(previousFavoriteRecipes);
+    console.log(previousFavoriteRecipes);
+  };
 
   return (
     <div id="main">
@@ -46,7 +56,10 @@ function FavoriteRecipes() {
             />
           </button>
 
-          <button type="button">
+          <button
+            type="button"
+            onClick={ () => removeFavoriteHandle(i) }
+          >
             <img
               alt="Botão de Favorito"
               src={ favoriteIcon }
