@@ -18,7 +18,6 @@ import App from '../App'
 import mealLookUp from './mocks/meal/mealLookUp';
 import { click } from '@testing-library/user-event/dist/click';
 import drinkLookUp from './mocks/drinks/drinkLookUp';
-import localStorageMock from './mocks/localStorageMock';
 
 
 
