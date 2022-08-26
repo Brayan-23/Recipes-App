@@ -44,6 +44,7 @@ function FavoriteRecipes() {
           </Link>
           <button
             type="button"
+            data-testid={ `${i}-sharebutton` }
             onClick={ ({ target }) => {
               target.innerHTML = 'Link copied!';
               copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);

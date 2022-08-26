@@ -11,6 +11,7 @@ import drinksSearch from './mocks/drinks/drinksSearch';
 import App from '../App'
 import mealLookUp from './mocks/meal/mealLookUp';
 import drinkLookUp from './mocks/drinks/drinkLookUp';
+import { fireEvent } from '@testing-library/react';
 
 
 
@@ -40,7 +41,6 @@ describe('Teste da página detalhes das receitas.js', () => {
         expect(titlePage).toBeInTheDocument();
         expect(screen.getByText('GG')).toBeInTheDocument()
       })
-})
 
 it('quando entramos na receita desejada é rederizado os elementos',async () => {
     
@@ -94,10 +94,8 @@ it('quando entramos na receita desejada é rederizado os elementos',async () => 
               });   
     
     
-            //   const buttonShare = screen.getByTestId('0-horizontal-share-btn')
-      
+              const buttonShare = await screen.findByTestId('0-sharebutton')
+              expect(buttonShare)
             //   userEvent.click(buttonShare)
-        
-            //   expect(screen.getByText('Link copied!'))
           })
-    
+        })
