@@ -4,19 +4,12 @@ import { screen, waitFor } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import Recipes from '../components/Recipes';
 import mealCategory from './mocks/meal/mealCategory';
-import { act, scryRenderedComponentsWithType } from 'react-dom/test-utils';
+import { act } from 'react-dom/test-utils';
 import drinksCategory from './mocks/drinks/drinksCategory';
-import mealCategoryBeef from './mocks/meal/mealCategoryBeef';
-import { fireEvent } from '@testing-library/react';
 import mockSearch from './mocks/meal/mockSearch';
 import drinksSearch from './mocks/drinks/drinksSearch';
-import drinksCategoryShake from './mocks/drinks/drinksCategoryShake';
-import RecipeDetails from '../components/RecipeDetails';
-import FetchProvider from '../context/fetchProvider';
-import LoginProvider from '../context/LoginProvider';
 import App from '../App'
 import mealLookUp from './mocks/meal/mealLookUp';
-import { click } from '@testing-library/user-event/dist/click';
 import drinkLookUp from './mocks/drinks/drinkLookUp';
 
 
