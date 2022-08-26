@@ -14,6 +14,7 @@ function Buttons({ url, id, title }) {
 
   useEffect(() => {
     const getLocalFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    console.log(localStorage.getItem('favoriteRecipes'));
     if (getLocalFavorite !== null) {
       const response = getLocalFavorite.some((elem) => elem.id === id);
       setHeart(response);

@@ -18,6 +18,7 @@ import App from '../App'
 import mealLookUp from './mocks/meal/mealLookUp';
 import { click } from '@testing-library/user-event/dist/click';
 import drinkLookUp from './mocks/drinks/drinkLookUp';
+import localStorageMock from './mocks/localStorageMock';
 
 
 
@@ -67,8 +68,10 @@ describe('Teste da página detalhes das receitas.js', () => {
     })
     
 
+    
+
     it('quando entramos na receita desejada é rederizado os elementos',async () => {
-        
+
         jest.spyOn(global, "fetch").mockImplementation(async (url) => {
             console.log(url)
              switch (url) {
@@ -93,14 +96,30 @@ describe('Teste da página detalhes das receitas.js', () => {
                }
            }}
            );
-          
+           
+    const TEST_KEY = 'favoriteRecipes'
+
+    const TEST_VALUE = JSON.stringify([{
+        alcoholicOrNot: "Optional alcohol",
+        category: "Ordinary Drink",
+        id: "15997",
+        image: "https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg",
+        name: "GG",
+        nationality: "",
+        type: "drink", }]);
+     
+     
+
+      localStorage.setItem(TEST_KEY, TEST_VALUE);
+           
       await act(async () => {
         renderWithRouter(<Recipes title='Drinks'/>);
       });
+
      
       const GGlink = await (screen.findByTestId("0-card-img"))
       userEvent.click(GGlink)
-     
+      
       const { history } = renderWithRouter(<App/>)
       await act(async () => {
         history.push('/drinks/15997')
@@ -108,5 +127,24 @@ describe('Teste da página detalhes das receitas.js', () => {
       await waitFor(() => expect(fetch).toBeCalled())
       expect(await screen.findByText('Galliano 2 1/2 shots')).toBeInTheDocument()
       expect(await screen.findByTestId('instructions')).toHaveTextContent('Pour the Galliano liqueur over ice.')  
-    })
+
+    
+      const startRecipeBtn = await screen.findByTestId('start-recipe-btn')
+      userEvent.click(startRecipeBtn)
+
+
+      expect(history.location.pathname).toBe('/drinks/15997/in-progress')
+      const favoriteBtn = screen.queryByTestId('favorite-btn');
+        userEvent.click(favoriteBtn);
+    
+        expect(JSON.parse(localStorage.getItem(TEST_KEY))).toEqual(JSON.parse(TEST_VALUE))
+      });
+   
+    // it('verifica a chave do local storage das receitas favoritas',async () => {
+    //     jest.spyOn(global, "fetch").mockImplementation(async (url) => {
+    //     const favoriteBtn = screen.queryByTestId('favorite-btn');
+    //     userEvent.click(favoriteBtn);
+    //     expect(localStorage.getItem('favoriteRecipes')).toBeTruthy();
+    //   })
+    // })
 })

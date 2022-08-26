@@ -33,15 +33,15 @@ function Recipes({ title }) {
         const filterFoods = meals.filter((elem, index) => index <= number4 && elem);
         setCategories(filterFoods);
         setCards(foods.meals);
-        console.log(foods.meals);
+        // console.log(foods.meals);
         setOriginalFoods(foods.meals);
       }
       if (title === 'Drinks') {
         const cocks = await fetchCocksAll();
         const { drinks } = await fetchCategoryCock();
-        console.log(drinks);
+        // console.log(drinks);
         const filterCocks = drinks.filter((elem, index) => index <= number4 && elem);
-        console.log(filterCocks);
+        // console.log(filterCocks);
         setCategories(filterCocks);
         setCards(cocks.drinks);
         setOriginalCocks(cocks.drinks);
@@ -76,7 +76,7 @@ function Recipes({ title }) {
   const cardsDrinks = () => {
     const number11 = 11;
     const cardsFilter = cards.filter((elem, index) => index <= number11 && elem);
-    console.log(cardsFilter);
+    // console.log(cardsFilter);
     return cardsFilter.map(({ strDrink, strDrinkThumb, idDrink }, index) => (
       <div key={ `${strDrink} ${index} ` } data-testid={ `${index}-recipe-card` }>
         <h3 data-testid={ `${index}-card-name` }>{strDrink}</h3>
@@ -94,9 +94,9 @@ function Recipes({ title }) {
 
   const cardsFoods = () => {
     const number11 = 11;
-    console.log(cards);
+    // console.log(cards);
     const cardsFilter = cards.filter((elem, index) => index <= number11 && elem);
-    console.log(cardsFilter);
+    // console.log(cardsFilter);
     return cardsFilter.map(({ strMeal, strMealThumb, idMeal }, index) => (
       <div key={ `${strMeal} ${index} ` } data-testid={ `${index}-recipe-card` }>
         <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
@@ -119,7 +119,7 @@ function Recipes({ title }) {
 
   const nada = () => {
     if (title === 'Foods') {
-      console.log(originalFoods);
+      // console.log(originalFoods);
       setCards(originalFoods);
     }
     if (title === 'Drinks') {
