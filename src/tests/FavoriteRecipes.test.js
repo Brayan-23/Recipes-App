@@ -96,6 +96,7 @@ it('quando entramos na receita desejada é rederizado os elementos',async () => 
     
               const buttonShare = await screen.findByTestId('0-sharebutton')
               expect(buttonShare)
-            //   userEvent.click(buttonShare)
+              userEvent.click(buttonShare)
           })
+
         })

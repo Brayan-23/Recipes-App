@@ -1,0 +1,10 @@
+@use 'variables';
+
+@mixin button {
+    background-color: variables.$primary-color;
+    border-radius: variables.$border-radius;
+    height: variables.$button-heidth;
+    width: variables.$button-width;
+    border: none;
+    font-size: 1.5em;
+}
