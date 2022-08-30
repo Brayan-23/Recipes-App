@@ -1,0 +1,53 @@
+@use 'variables';
+
+.div-buttons{
+    display: flex;
+    max-width: 360px;
+    flex-grow: 4;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 20px;
+    button{
+       max-width: 200px;
+       border: none;
+       background-color: coral;
+       border-radius: 6px;
+       margin: 5px 5px;
+    }
+};
+
+    .foodcard {
+   display: flex;
+   margin: 20px;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   h3{
+       background-color: white;
+       font-size: 1em;
+   }
+  
+};
+
+.card-food{
+    display: flex;
+    flex-direction: column;
+    border-radius: variables.$border-radius;
+    background-color: white;
+    width: 140px; 
+    height: 160px;
+    margin: 10px;
+    margin-bottom: 30px;
+    h3{ 
+        margin-top: 10px;
+        align-self: center;
+    }
+}
+
+.cards-img{
+    // justify-self: ;
+    width: 140px;
+    border-radius: 0px 0px 20px 20px;
+   
+   };
+   

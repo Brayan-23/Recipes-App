@@ -1,0 +1,17 @@
+ @use 'variables' as *;
+ 
+ .footer {
+  background-color: $primary-color;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  align-items: center;
+  width: 360px;
+  justify-content: space-between;
+  img{
+    margin: 5px 20px;
+    width: 40px;
+  }
+  
+};

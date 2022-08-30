@@ -8,6 +8,7 @@ import {
   fetchLetterCock,
   fetchNomeCock,
   fetchIngredientCock } from '../helpers/FetchApi';
+import '../css/Header.scss';
 
 const sorry = 'Sorry, we haven\'t found any recipes for these filters.';
 
@@ -76,53 +77,59 @@ function SearchBar({ title, history }) {
   };
 
   return (
-    <nav>
-      <label htmlFor="ingrediente ">
-        <input
-          type="radio"
-          data-testid="ingredient-search-radio"
-          name="filters"
-          id="ingrediente "
-          value={ ingrediente }
-          onChange={ ({ target: { checked } }) => {
-            setIngrediente(checked);
-            setFirst(false);
-            setName(false);
-          } }
-        />
-        Ingredient
-      </label>
-      <label htmlFor="name ">
-        <input
-          type="radio"
-          data-testid="name-search-radio"
-          name="filters"
-          id="name "
-          value={ name }
-          onChange={ ({ target: { checked } }) => {
-            setName(checked);
-            setIngrediente(false);
-            setFirst(false);
-          } }
-        />
-        Name
-      </label>
-      <label htmlFor="first-letter ">
-        <input
-          type="radio"
-          data-testid="first-letter-search-radio"
-          name="filters"
-          id="first-letter"
-          value={ first }
-          onChange={ ({ target: { checked } }) => {
-            setFirst(checked);
-            setIngrediente(false);
-            setName(false);
-          } }
-        />
-        First
-      </label>
+    <nav className="search-filters">
+      <div className="filters">
+        <label htmlFor="ingrediente ">
+          <input
+            className="label-filter"
+            type="radio"
+            data-testid="ingredient-search-radio"
+            name="filters"
+            id="ingrediente "
+            value={ ingrediente }
+            onChange={ ({ target: { checked } }) => {
+              setIngrediente(checked);
+              setFirst(false);
+              setName(false);
+            } }
+          />
+          Ingredient
+        </label>
+        <label htmlFor="name">
+          <input
+            className="label-filter"
+            type="radio"
+            data-testid="name-search-radio"
+            name="filters"
+            id="name "
+            value={ name }
+            onChange={ ({ target: { checked } }) => {
+              setName(checked);
+              setIngrediente(false);
+              setFirst(false);
+            } }
+          />
+          Name
+        </label>
+        <label htmlFor="first-letter ">
+          <input
+            className="label-filter"
+            type="radio"
+            data-testid="first-letter-search-radio"
+            name="filters"
+            id="first-letter"
+            value={ first }
+            onChange={ ({ target: { checked } }) => {
+              setFirst(checked);
+              setIngrediente(false);
+              setName(false);
+            } }
+          />
+          First
+        </label>
+      </div>
       <button
+        className="search"
         type="button"
         data-testid="exec-search-btn"
         onClick={ ifFecth }

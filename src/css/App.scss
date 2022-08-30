@@ -1,3 +1,5 @@
+@use 'variables';
+
 div{
-    background-color: black;
+    background-color: variables.$background-color;
 }

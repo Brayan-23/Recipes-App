@@ -1,0 +1,75 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+.recipe-img{
+max-width: 360px;
+margin: 30px 0px;
+};
+
+.recipes-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h3{
+        color: gray;
+    }
+    h1{
+        margin: 0px;
+    }
+    .recipe-title{
+        margin-top: 20px;
+    }
+    .share-btn{
+     position: absolute;
+     left: 310px;
+     border: 0;
+    }
+    .favorite-btn{
+     position: absolute;
+     right: 320px;
+     }
+};
+
+.details-recipe{
+    h2{
+        margin-left: 20px;
+    }
+}
+
+.instructions{
+    background-color: $secondary-color ;
+    margin: 10px 20px 30px;
+    border-radius: $border-radius;
+    padding: 20px;
+}
+
+.ingredients{
+    background-color: $secondary-color ;
+    margin: 10px 20px 30px;
+    border-radius: $border-radius;
+    padding: 20px;
+}
+
+.carousel {
+    display: flex;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    h3{
+        background-color: white;
+        font-size: 1,5em;
+        margin: 0px 20px;
+        border-radius: 12px 12px 0px 0px;
+        padding: 2px 15px;
+    }
+    img{
+        height: 200px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0px 20px;
+        border-radius: 0px 0px 12px 12px;
+    }
+  }
+  .start-continue{
+    @include button;
+    margin: 20px 90px;
+  }
