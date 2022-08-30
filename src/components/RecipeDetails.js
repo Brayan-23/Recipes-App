@@ -150,7 +150,6 @@ function RecipeDetails({ title, match: { params: { id } } }) {
       <div className="carousel">
         {recomendations.map((elem, index) => (
           <div
-            className="item"
             data-testid={ `${index}-recomendation-card` }
             key={ `recipes ${index}` }
           >
