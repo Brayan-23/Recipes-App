@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import favoriteIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import '../css/Favorite.scss';
-import Footer from '../components/Footer';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
