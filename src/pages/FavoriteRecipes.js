@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [filter, setFilter] = useState('');
   const previousFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   useEffect(() => {
@@ -28,63 +29,80 @@ function FavoriteRecipes() {
   return (
     <div className="favorite">
       <Header title="Favorite Recipes" />
-      <div className="filter-fav-btn">
-        <button type="button" data-testid="filter-by-food-btn">Foods </button>
-        <button type="button" data-testid="filter-by-drink-btn">Drinks </button>
-        <button type="button" data-testid="filter-by-all-btn">All </button>
-      </div>
+      <button
+        type="button"
+        data-testid="filter-by-food-btn"
+        onClick={ () => setFilter('food') }
+      >
+        Foods
+        {' '}
 
-      {favoriteRecipes.length !== 0 && favoriteRecipes.map((recipe, i) => (
-        <div id="mainAoQuadraxion" key={ recipe.id }>
-          <Link to={ `/${recipe.type}s/${recipe.id}` }>
-            <img
-              className="foodimage"
-              data-testid={ `${i}-horizontal-image` }
-              src={ recipe.image }
-              alt={ recipe.name }
-            />
-          </Link>
-          <div className="nameAndType">
+      </button>
+
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+        onClick={ () => setFilter('drink') }
+      >
+        Drinks
+        {' '}
+
+      </button>
+
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        onClick={ () => setFilter('') }
+      >
+        All
+        {' '}
+
+      </button>
+
+      {favoriteRecipes.length !== 0
+      && favoriteRecipes.filter((e) => (!filter ? e : e.type === filter))
+        .map((recipe, i) => (
+          <div id="mainAoQuadraxion" key={ recipe.id }>
             <Link to={ `/${recipe.type}s/${recipe.id}` }>
               <h2 data-testid={ `${i}-horizontal-name` }>{recipe.name}</h2>
+              <img
+                data-testid={ `${i}-horizontal-image` }
+                src={ recipe.image }
+                alt={ recipe.name }
+              />
             </Link>
+            <button
+              type="button"
+              data-testid={ `${i}-sharebutton` }
+              onClick={ ({ target }) => {
+                target.innerHTML = 'Link copied!';
+                copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
+              } }
+            >
+              <img
+                alt="Botão de Compartilhar"
+                src={ shareIcon }
+                data-testid={ `${i}-horizontal-share-btn` }
+              />
+            </button>
+
+            <button
+              type="button"
+              onClick={ () => removeFavoriteHandle(i) }
+            >
+              <img
+                alt="Botão de Favorito"
+                src={ favoriteIcon }
+                data-testid={ `${i}-horizontal-favorite-btn` }
+              />
+            </button>
             <p data-testid={ `${i}-horizontal-top-text` }>
               {recipe.type === 'drink'
                 ? recipe.alcoholicOrNot
                 : `${recipe.nationality} - ${recipe.category}`}
             </p>
-            <div className="button">
-              <button
-                className="share-btn"
-                type="button"
-                data-testid={ `${i}-sharebutton` }
-                onClick={ ({ target }) => {
-                  target.innerHTML = 'Link copied!';
-                  copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
-                } }
-              >
-                <img
-                  alt="Botão de Compartilhar"
-                  src={ shareIcon }
-                  data-testid={ `${i}-horizontal-share-btn` }
-                />
-              </button>
-              <button
-                type="button"
-                onClick={ () => removeFavoriteHandle(i) }
-              >
-                <img
-                  className="fav-btn"
-                  alt="Botão de Favorito"
-                  src={ favoriteIcon }
-                  data-testid={ `${i}-horizontal-favorite-btn` }
-                />
-              </button>
-            </div>
           </div>
-        </div>
-      ))}
-      <Footer />
+        ))}
     </div>
   );
 }
