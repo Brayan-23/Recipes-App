@@ -64,8 +64,8 @@ function Header({ title, history }) {
         </label>
       )}
 
-      <SearchBar history={ history } title={ title } />
-
+      { title === 'Foods' && <SearchBar history={ history } title={ title } />}
+      { title === 'Drinks' && <SearchBar history={ history } title={ title } />}
     </section>
   );
 }

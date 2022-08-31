@@ -26,11 +26,12 @@ function Login({ history }) {
   validateUser();
 
   return (
-    <div id="loginPage">
+    <div className="loginPage">
       <form>
         <h1> Login </h1>
         <label htmlFor="email">
           <input
+            placeholder="E-mail"
             type="email"
             data-testid="email-input"
             value={ loginInput }
@@ -39,6 +40,7 @@ function Login({ history }) {
         </label>
         <label htmlFor="password">
           <input
+            placeholder="password"
             type="password"
             data-testid="password-input"
             value={ loginPassWord }

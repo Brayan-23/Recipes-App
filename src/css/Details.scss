@@ -73,3 +73,12 @@ margin: 30px 0px;
     @include button;
     margin: 20px 90px;
   }
+
+  .ingredients-details{
+    display: flex;
+    flex-direction: column;
+    background-color: $secondary-color ;
+    margin: 10px 20px 30px;
+    border-radius: $border-radius;
+    padding: 20px;
+}

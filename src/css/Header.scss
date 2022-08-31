@@ -1,6 +1,10 @@
 @use 'variables';
 @use 'mixins' as *;
 
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
 .header-section{
    display: flex;
    flex-direction: column;
@@ -13,7 +17,7 @@
     .profile-icon{
         margin: 20px;
         order: -2;
-        background-color: coral;
+        background-color: transparent;
     };
 
     .search-button{
@@ -25,7 +29,9 @@
         flex-wrap: wrap;
     };
     h1{
+        font-family: Pacifico;
         margin-top: 10px;
+        color: white
     }
 };
 
