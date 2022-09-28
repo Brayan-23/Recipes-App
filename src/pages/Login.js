@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { LoginContext } from '../context/LoginContext';
+import '../css/Login.scss';
 
 function Login({ history }) {
   const { userLogin, setUserLogin } = useContext(LoginContext);
@@ -25,35 +26,41 @@ function Login({ history }) {
   validateUser();
 
   return (
-    <form>
-      <label htmlFor="email">
-        <input
-          type="email"
-          data-testid="email-input"
-          value={ loginInput }
-          onChange={ ({ target: { value } }) => setLoginInput(value) }
-        />
-      </label>
-      <label htmlFor="password">
-        <input
-          type="password"
-          data-testid="password-input"
-          value={ loginPassWord }
-          onChange={ ({ target: { value } }) => setLoginPassword(value) }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ userLogin }
-        onClick={ () => {
-          LoginStorageHandle();
-          history.push('/foods');
-        } }
-      >
-        Enter
-      </button>
-    </form>
+    <div className="loginPage">
+      <form>
+        <h1> Login </h1>
+        <label htmlFor="email">
+          <input
+            placeholder="E-mail"
+            type="email"
+            data-testid="email-input"
+            value={ loginInput }
+            onChange={ ({ target: { value } }) => setLoginInput(value) }
+          />
+        </label>
+        <label htmlFor="password">
+          <input
+            placeholder="password"
+            type="password"
+            data-testid="password-input"
+            value={ loginPassWord }
+            onChange={ ({ target: { value } }) => setLoginPassword(value) }
+          />
+        </label>
+        <button
+          className="buttonLogin"
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ userLogin }
+          onClick={ () => {
+            LoginStorageHandle();
+            history.push('/foods');
+          } }
+        >
+          Enter
+        </button>
+      </form>
+    </div>
   );
 }
 

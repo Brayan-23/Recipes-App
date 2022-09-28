@@ -1,0 +1,81 @@
+@use 'variables';
+@use 'mixins' as *;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+.header-section{
+   display: flex;
+   flex-direction: column;
+}
+.header{
+    background-color: coral;
+    display: flex;
+    justify-content: space-between;
+    
+    .profile-icon{
+        margin: 20px;
+        order: -2;
+        background-color: transparent;
+    };
+
+    .search-button{
+        margin: 20px;
+        border: none;
+        background: none;
+        width: 50px;  
+        align-self: baseline;
+        flex-wrap: wrap;
+    };
+    h1{
+        font-family: Pacifico;
+        margin-top: 10px;
+        color: white
+    }
+};
+
+
+.search-component{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px 20px;
+};
+
+.filters{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 20px;
+    align-items: baseline;
+}
+
+.search-filters{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+};
+
+.label-filter{
+margin-right: 7px;
+}
+
+
+.search-type-input{
+  margin-top: 15px;
+  display: flex;
+  width: 340px;
+  height: 40px;
+  margin-left: 10px;
+  border-radius: variables.$border-radius;
+  
+};    
+
+
+.search{
+    @include button;
+    margin: 0px 75px;
+    height: 30px;
+    font-size: 20px;
+}
+

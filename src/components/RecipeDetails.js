@@ -7,7 +7,7 @@ import {
   fetchItemFood,
   fetchCocksAll,
   fetchFoodsAll } from '../helpers/FetchApi';
-import '../css/recipeDetails.css';
+import '../css/Details.scss';
 
 const START_RECICPE = 'Start Recipe';
 
@@ -50,7 +50,9 @@ function RecipeDetails({ title, match: { params: { id } } }) {
       .filter((elem) => elem[0].includes('strIngredient'));
     const filterMeasure = ingr.filter((elem) => elem[0].includes('strMeasure'));
     return (
-      <section>
+      <section
+        className="ingredients"
+      >
         {filterIngredient.map((elem, index) => (
           elem[1]
           && (
@@ -99,15 +101,20 @@ function RecipeDetails({ title, match: { params: { id } } }) {
 
   return (
     <div className="details-recipe">
-      <h1 data-testid="recipe-title">
+      <div className="recipes-header">
+        <h1
+          className="recipe-title"
+          data-testid="recipe-title"
+        >
+          {title === 'Foods'
+            ? details.strMeal
+            : details.strDrink}
+        </h1>
         {title === 'Foods'
-          ? details.strMeal
-          : details.strDrink}
-      </h1>
-      {title === 'Foods'
-        ? <h3 data-testid="recipe-category">{details.strCategory}</h3>
-        : <h3 data-testid="recipe-category">{details.strAlcoholic}</h3> }
-      <Buttons id={ id } title={ title } url={ copyUrl } />
+          ? <h3 data-testid="recipe-category">{details.strCategory}</h3>
+          : <h3 data-testid="recipe-category">{details.strAlcoholic}</h3> }
+        <Buttons id={ id } title={ title } url={ copyUrl } />
+      </div>
       <img
         src={ title === 'Foods'
           ? details.strMealThumb
@@ -116,7 +123,16 @@ function RecipeDetails({ title, match: { params: { id } } }) {
         data-testid="recipe-photo"
         className="recipe-img"
       />
-      <p data-testid="instructions">{details.strInstructions}</p>
+      <h2>
+        Instruções
+      </h2>
+      <p
+        className="instructions"
+        data-testid="instructions"
+      >
+        {details.strInstructions}
+
+      </p>
       {title === 'Foods'
       && <iframe
         width="350"
@@ -126,8 +142,11 @@ function RecipeDetails({ title, match: { params: { id } } }) {
         title="YouTube video player"
         allowFullScreen
       />}
+      <h2>
+        Ingredientes
+      </h2>
       {ingredients()}
-      <p>nada</p>
+      {/* <p>nada</p> */}
       <div className="carousel">
         {recomendations.map((elem, index) => (
           <div

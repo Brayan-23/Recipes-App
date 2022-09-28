@@ -70,6 +70,7 @@ function Buttons({ url, id, title }) {
   return (
     <section>
       <button
+        className="share-btn"
         type="button"
         data-testid="share-btn"
         onClick={ () => {
@@ -81,6 +82,7 @@ function Buttons({ url, id, title }) {
       </button>
       <label htmlFor="favorite">
         <input
+          className="favorite-btn"
           type="image"
           id="favorite"
           src={ heart ? blackHeartIcon : whiteHeartIcon }

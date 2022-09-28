@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { fetchItemCock, fetchItemFood } from '../helpers/FetchApi';
 import Buttons from './Buttons';
+import '../css/Details.scss';
 
 function RecipeInProgress({ title, match: { params: { id } } }) {
   const history = useHistory();
@@ -133,26 +134,45 @@ function RecipeInProgress({ title, match: { params: { id } } }) {
   }, [ingredient]);
 
   return (
-    <div>
-      <h1 data-testid="recipe-title">
+    <div className="details-recipe">
+      <div className="recipes-header">
+        <h1
+          className="recipe-title"
+          data-testid="recipe-title"
+        >
+          {title === 'Foods'
+            ? details.strMeal
+            : details.strDrink}
+        </h1>
         {title === 'Foods'
-          ? details.strMeal
-          : details.strDrink}
-      </h1>
-      {title === 'Foods'
-        ? <h3 data-testid="recipe-category">{details.strCategory}</h3>
-        : <h3 data-testid="recipe-category">{details.strAlcoholic}</h3> }
-      <Buttons url={ copyUrl } title={ title } id={ id } />
-      <img
-        src={ title === 'Foods'
-          ? details.strMealThumb
-          : details.strDrinkThumb }
-        alt="imagem da receita"
-        data-testid="recipe-photo"
-        className="recipe-img"
-      />
-      <p data-testid="instructions">{details.strInstructions}</p>
-      <section>
+          ? <h3 data-testid="recipe-category">{details.strCategory}</h3>
+          : <h3 data-testid="recipe-category">{details.strAlcoholic}</h3> }
+        <Buttons url={ copyUrl } title={ title } id={ id } />
+        <img
+          src={ title === 'Foods'
+            ? details.strMealThumb
+            : details.strDrinkThumb }
+          alt="imagem da receita"
+          data-testid="recipe-photo"
+          className="recipe-img"
+        />
+      </div>
+      <h2>
+        Instruções
+      </h2>
+      <p
+        className="instructions"
+        data-testid="instructions"
+      >
+        {details.strInstructions}
+
+      </p>
+      <h2>
+        Ingredientes
+      </h2>
+      <section
+        className="ingredients-details"
+      >
         {ingr.map((elem, index) => (
           <label
             key={ `checkbox ${index}` }
@@ -171,6 +191,7 @@ function RecipeInProgress({ title, match: { params: { id } } }) {
         ))}
       </section>
       <button
+        className="start-continue"
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ btnFinish }

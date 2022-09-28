@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './css/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
@@ -18,26 +18,35 @@ function App() {
       <Switch>
         <Route exact path="/" render={ (props) => <Login { ...props } /> } />
         <Route
+          exact
           path="/drinks/:id/in-progress"
           render={ (props) => <RecipeInProgress { ...props } title="Drinks" /> }
         />
         <Route
+          exact
           path="/foods/:id/in-progress"
           render={ (props) => <RecipeInProgress { ...props } title="Foods" /> }
         />
         <Route
+          exact
           path="/foods/:id"
           render={ (props) => <RecipeDetails { ...props } title="Foods" /> }
         />
         <Route
+          exact
           path="/drinks/:id"
           render={ (props) => <RecipeDetails { ...props } title="Drinks" /> }
         />
-        <Route path="/foods" render={ (props) => <Foods { ...props } /> } />
-        <Route path="/drinks" render={ (props) => <Drinks { ...props } /> } />
-        <Route path="/profile" render={ (props) => <Profile { ...props } /> } />
-        <Route path="/done-recipes" render={ (props) => <DoneRecipes { ...props } /> } />
+        <Route exact path="/foods" render={ (props) => <Foods { ...props } /> } />
+        <Route exact path="/drinks" render={ (props) => <Drinks { ...props } /> } />
+        <Route exact path="/profile" render={ (props) => <Profile { ...props } /> } />
         <Route
+          exact
+          path="/done-recipes"
+          render={ (props) => <DoneRecipes { ...props } /> }
+        />
+        <Route
+          exact
           path="/favorite-recipes"
           component={ (props) => <FavoriteRecipes { ...props } /> }
         />

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import favoriteIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import '../css/Favorite.scss';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -25,7 +26,7 @@ function FavoriteRecipes() {
   };
 
   return (
-    <div id="main">
+    <div className="favorite">
       <Header title="Favorite Recipes" />
       <button
         type="button"

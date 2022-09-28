@@ -9,7 +9,7 @@ import {
   fetchCategoryFood,
   fetchCocksCategory,
   fetchFoodsCategory } from '../helpers/FetchApi';
-import '../css/cards.css';
+import '../css/Recipes.scss';
 
 function Recipes({ title }) {
   const {
@@ -78,7 +78,11 @@ function Recipes({ title }) {
     const cardsFilter = cards.filter((elem, index) => index <= number11 && elem);
     // console.log(cardsFilter);
     return cardsFilter.map(({ strDrink, strDrinkThumb, idDrink }, index) => (
-      <div key={ `${strDrink} ${index} ` } data-testid={ `${index}-recipe-card` }>
+      <div
+        className="card-food"
+        key={ `${strDrink} ${index} ` }
+        data-testid={ `${index}-recipe-card` }
+      >
         <h3 data-testid={ `${index}-card-name` }>{strDrink}</h3>
         <Link to={ `/drinks/${idDrink}` }>
           <img
@@ -98,7 +102,11 @@ function Recipes({ title }) {
     const cardsFilter = cards.filter((elem, index) => index <= number11 && elem);
     // console.log(cardsFilter);
     return cardsFilter.map(({ strMeal, strMealThumb, idMeal }, index) => (
-      <div key={ `${strMeal} ${index} ` } data-testid={ `${index}-recipe-card` }>
+      <div
+        className="card-food"
+        key={ `${strMeal} ${index} ` }
+        data-testid={ `${index}-recipe-card` }
+      >
         <h3 data-testid={ `${index}-card-name` }>{strMeal}</h3>
         <Link to={ `/foods/${idMeal}` }>
           <img
@@ -151,7 +159,9 @@ function Recipes({ title }) {
           </div>
         ))}
       </div>
-      {renderFunctions()}
+      <div className="foodcard">
+        {renderFunctions()}
+      </div>
     </section>
   );
 }

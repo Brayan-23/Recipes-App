@@ -1,0 +1,39 @@
+@use 'variables';
+@use 'mixins' as *;
+body{
+    background-image: url('../images/profile-user\ 1\ \(cópia\).png');
+    height: 680px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+form{
+    position: absolute;
+    background-color: white;
+    top: 160px;
+    right: 20px;
+    border-radius: variables.$border-radius;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    input{
+        border-radius: variables.$border-radius;
+        height: variables.$textInput-heidth;
+        width: variables.$textInput-width;
+    };
+};
+
+
+h1{
+align-self: center;
+margin-bottom: 20px;
+};
+
+.buttonLogin{
+    flex-wrap: wrap;
+    margin-top: 20px;
+    @include button;
+    
+}

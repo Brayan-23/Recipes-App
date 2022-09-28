@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import '../css/Profile.scss';
 
 function ProfileComponent() {
   const [email, setEmail] = useState('');
@@ -21,8 +22,8 @@ function ProfileComponent() {
   };
 
   return (
-    <div>
-      <p data-testid="profile-email">{ email }</p>
+    <div className="profile">
+      <h3 data-testid="profile-email">{ email }</h3>
       <button
         type="button"
         data-testid="profile-done-btn"
