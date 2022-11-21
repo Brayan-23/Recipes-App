@@ -96,7 +96,6 @@ function RecipeInProgress({ title, match: { params: { id } } }) {
       const recipes = title === 'Foods'
         ? getLocalProgress.meals[id]
         : getLocalProgress.cocktails[id];
-      console.log('chamou');
       if (recipes.length === ingr.length) {
         setBtnFinish(false);
       } else { setBtnFinish(true); }

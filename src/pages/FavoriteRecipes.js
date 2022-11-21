@@ -70,31 +70,24 @@ function FavoriteRecipes() {
                 alt={ recipe.name }
               />
             </Link>
-            <button
-              type="button"
+            <input
+              type="image"
               data-testid={ `${i}-sharebutton` }
-              onClick={ ({ target }) => {
-                target.innerHTML = 'Link copied!';
+              onClick={ () => {
+                global.alert('Link Copied');
                 copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
               } }
-            >
-              <img
-                alt="Botão de Compartilhar"
-                src={ shareIcon }
-                data-testid={ `${i}-horizontal-share-btn` }
-              />
-            </button>
+              alt="Botão de Compartilhar"
+              src={ shareIcon }
+            />
 
-            <button
-              type="button"
+            <input
+              type="image"
               onClick={ () => removeFavoriteHandle(i) }
-            >
-              <img
-                alt="Botão de Favorito"
-                src={ favoriteIcon }
-                data-testid={ `${i}-horizontal-favorite-btn` }
-              />
-            </button>
+              alt="Botão de Favorito"
+              src={ favoriteIcon }
+              data-testid={ `${i}-horizontal-favorite-btn` }
+            />
             <p data-testid={ `${i}-horizontal-top-text` }>
               {recipe.type === 'drink'
                 ? recipe.alcoholicOrNot

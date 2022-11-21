@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import favoriteIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import '../css/doneRecipes.scss';
 
 function DoneRecipes({ history }) {
   const [doneRecipes, setDoneRecipes] = useState([]);
@@ -16,9 +17,10 @@ function DoneRecipes({ history }) {
   }, []);
 
   return (
-    <div>
+    <div className="done">
       <Header history={ history } title="Done Recipes" />
       <button
+        className="btn"
         type="button"
         data-testid="filter-by-food-btn"
         onClick={ () => setFilter('food') }
@@ -29,6 +31,7 @@ function DoneRecipes({ history }) {
       </button>
 
       <button
+        className="btn"
         type="button"
         data-testid="filter-by-drink-btn"
         onClick={ () => setFilter('drink') }
@@ -39,6 +42,7 @@ function DoneRecipes({ history }) {
       </button>
 
       <button
+        className="btn"
         type="button"
         data-testid="filter-by-all-btn"
         onClick={ () => setFilter('') }
@@ -47,56 +51,57 @@ function DoneRecipes({ history }) {
         {' '}
 
       </button>
-
-      {doneRecipes.length !== 0
+      <section className="total">
+        {doneRecipes.length !== 0
       && doneRecipes.filter((e) => (!filter ? e : e.type === filter))
         .map((recipe, i) => (
           <div id="mainAoQuadraxion" key={ recipe.id }>
             <Link to={ `/${recipe.type}s/${recipe.id}` }>
-              <h2 data-testid={ `${i}-horizontal-name` }>{recipe.name}</h2>
+              <h3 data-testid={ `${i}-horizontal-name` }>{recipe.name}</h3>
               <img
                 data-testid={ `${i}-horizontal-image` }
                 src={ recipe.image }
                 alt={ recipe.name }
               />
             </Link>
-            <p data-testid={ `${i}-horizontal-done-date` }>
-              { recipe.doneDate }
-            </p>
-            <p data-testid={ `${i}-${recipe.tags[0]}-horizontal-tag` }>
-              { recipe.tags[0] }
-            </p>
-            <p data-testid={ `${i}-${recipe.tags[1]}-horizontal-tag` }>
-              {recipe.tags[1]}
-            </p>
-            <button
-              type="button"
-              onClick={ ({ target }) => {
-                target.innerHTML = 'Link copied!';
-                copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
-              } }
-            >
-              <img
+            <section className="info">
+              <p className="tags" data-testid={ `${i}-horizontal-done-date` }>
+                { recipe.doneDate }
+              </p>
+              <p className="tags" data-testid={ `${i}-${recipe.tags[0]}-horizontal-tag` }>
+                { recipe.tags[0] }
+              </p>
+              <p className="tags" data-testid={ `${i}-${recipe.tags[1]}-horizontal-tag` }>
+                {recipe.tags[1]}
+              </p>
+              <input
+                type="image"
+                onClick={ () => {
+                  global.alert('Link Copied');
+                  copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
+                } }
+                className="buttons"
                 alt="Botão de Compartilhar"
                 src={ shareIcon }
                 data-testid={ `${i}-horizontal-share-btn` }
               />
-            </button>
 
-            <button type="button">
-              <img
+              <input
+                className="buttons"
+                type="image"
                 alt="Botão de Favorito"
                 src={ favoriteIcon }
                 data-testid={ `${i}-horizontal-favorite-btn` }
               />
-            </button>
-            <p data-testid={ `${i}-horizontal-top-text` }>
-              {recipe.type === 'drink'
-                ? recipe.alcoholicOrNot
-                : `${recipe.nationality} - ${recipe.category}`}
-            </p>
+              <p data-testid={ `${i}-horizontal-top-text` }>
+                {recipe.type === 'drink'
+                  ? recipe.alcoholicOrNot
+                  : `${recipe.nationality} - ${recipe.category}`}
+              </p>
+            </section>
           </div>
         ))}
+      </section>
     </div>
   );
 }

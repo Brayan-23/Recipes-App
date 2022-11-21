@@ -11,6 +11,30 @@ import '../css/Details.scss';
 
 const START_RECICPE = 'Start Recipe';
 
+const objFoods = (find) => ({
+  id: find.idMeal,
+  type: 'food',
+  nationality: find.strArea,
+  category: find.strCategory,
+  alcoholicOrNot: '',
+  name: find.strMeal,
+  doneDate: new Date(),
+  tags: find.strTags !== null ? find.strTags.split(', ') : [],
+  image: find.strMealThumb,
+});
+
+const objCoocks = (find) => ({
+  id: find.idDrink,
+  type: 'drink',
+  nationality: '',
+  category: find.strCategory,
+  alcoholicOrNot: find.strAlcoholic,
+  doneDate: new Date(),
+  tags: find.strTags !== null ? find.strTags.split(', ') : [],
+  name: find.strDrink,
+  image: find.strDrinkThumb,
+});
+
 function RecipeDetails({ title, match: { params: { id } } }) {
   const history = useHistory();
   const [details, setDetails] = useState({});
@@ -91,11 +115,38 @@ function RecipeDetails({ title, match: { params: { id } } }) {
   };
 
   const pushDinksAndFoods = () => {
-    if (startAndContinue() === START_RECICPE && title === 'Foods') {
+    if (title === 'Foods') {
       history.push(`/foods/${id}/in-progress`);
     }
-    if (startAndContinue() === START_RECICPE && title === 'Drinks') {
+    if (title === 'Drinks') {
       history.push(`/drinks/${id}/in-progress`);
+    }
+  };
+
+  const saveDoneRecipes = async () => {
+    const result = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (result === null) {
+      if (title === 'Foods') {
+        const { meals } = await fetchItemFood(id);
+        const obj = objFoods(meals[0]);
+        localStorage.setItem('doneRecipes', JSON.stringify([obj]));
+      }
+      if (title === 'Drinks') {
+        const { drinks } = await fetchItemCock(id);
+        const obj = objCoocks(drinks[0]);
+        localStorage.setItem('doneRecipes', JSON.stringify([obj]));
+      }
+    } else {
+      if (title === 'Foods') {
+        const { meals } = await fetchItemFood(id);
+        const obj = objFoods(meals[0]);
+        localStorage.setItem('doneRecipes', JSON.stringify([...result, obj]));
+      }
+      if (title === 'Drinks') {
+        const { drinks } = await fetchItemCock(id);
+        const objBebida = objCoocks(drinks[0]);
+        localStorage.setItem('doneRecipes', JSON.stringify([...result, objBebida]));
+      }
     }
   };
 
@@ -173,7 +224,10 @@ function RecipeDetails({ title, match: { params: { id } } }) {
           type="button"
           className="start-continue"
           data-testid="start-recipe-btn"
-          onClick={ pushDinksAndFoods }
+          onClick={ () => {
+            pushDinksAndFoods();
+            saveDoneRecipes();
+          } }
         >
           {startAndContinue()}
         </button>)}
