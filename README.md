@@ -1,13 +1,61 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+# :scroll: Recipes App
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+Um app para você pesquisar varias receitas de comidas e bebidas.
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+## :link: Sobre
+- Obs.: Utilizar a resolução 360x640 para uma melhor experiência.
+
+## ⚙️ Funcionalidades
+✅ Formulário de login;
+
+✅ Gerenciamento de estado global;
+
+✅ APIs para enviar e receber os dados;
+
+✅ Compartilhar e favoritar receitas;
+
+## :hammer_and_wrench: Ferramentas 
+### 🍮 Frontend
+- React;
+- Redux;
+- Jest;
+- Bootstrap;
+- CSS;
+- React Router;
+- 
+## 📁 Acessar Projeto Localmente
+
+- *Clonar o repositório:*
+
+```
+$ git clone git@github.com:mathews-r/recipesapp.git
+```
+
+- *Acessar o projeto recipesapp:*
+
+```
+$ cd recipesapp
+```
+
+- *Instalar dependências:*
+
+```
+$ npm install
+```
+
+- *Executar projeto:*
+
+```
+$ npm start
+```
+- *Executar os testes do projeto:*
+
+```
+$ npm run test
+```
+## 👨‍💻 Desenvolvedores
+
+- [Brayan Santos](https://github.com/Brayan-23)
+- [Maristela]
+- [Cristiano Pita](https://github.com/crizatip)
+- [Fabiana Araújo](https://github.com/Fabiana-Araujo)
